@@ -5,6 +5,13 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DummyOwinAuth", "DummyOwinAuth\DummyOwinAuth.csproj", "{C588F874-AB6D-44FB-8582-8F5903E61C2C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6436DC2B-CA86-4288-BD55-1032C8C19452}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE.txt = LICENSE.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleMvcApp", "SampleMvcApp\SampleMvcApp.csproj", "{2B6A32DB-6136-4A3C-B5E1-36129EE3AB4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +22,10 @@ Global
 		{C588F874-AB6D-44FB-8582-8F5903E61C2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C588F874-AB6D-44FB-8582-8F5903E61C2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C588F874-AB6D-44FB-8582-8F5903E61C2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B6A32DB-6136-4A3C-B5E1-36129EE3AB4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B6A32DB-6136-4A3C-B5E1-36129EE3AB4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B6A32DB-6136-4A3C-B5E1-36129EE3AB4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B6A32DB-6136-4A3C-B5E1-36129EE3AB4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
