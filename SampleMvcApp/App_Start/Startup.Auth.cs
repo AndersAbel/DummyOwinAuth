@@ -8,6 +8,7 @@ using Microsoft.Owin.Security.Google;
 using Owin;
 using System;
 using SampleMvcApp.Models;
+using DummyOwinAuth;
 
 namespace SampleMvcApp
 {
@@ -55,6 +56,8 @@ namespace SampleMvcApp
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+
+            app.UseDummyAuthentication(new DummyAuthenticationOptions("john.doe@example.com"));
         }
     }
 }
