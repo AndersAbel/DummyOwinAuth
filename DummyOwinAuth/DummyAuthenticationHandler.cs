@@ -14,5 +14,15 @@ namespace DummyOwinAuth
         {
             throw new NotImplementedException();
         }
+
+        protected override Task ApplyResponseChallengeAsync()
+        {
+            if (Response.StatusCode == 401)
+            {
+                Response.Redirect(Options.CallbackPath.Value);
+            }
+
+            return Task.FromResult<object>(null);
+        }
     }
 }
