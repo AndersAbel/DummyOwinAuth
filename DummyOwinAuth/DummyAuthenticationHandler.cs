@@ -19,7 +19,21 @@ namespace DummyOwinAuth
         {
             if (Response.StatusCode == 401)
             {
-                Response.Redirect(Options.CallbackPath.Value);
+                var challenge = Helper.LookupChallenge(Options.AuthenticationType, Options.AuthenticationMode);
+                if (challenge == null)
+                {
+                    // Real implementations just return here, but I want to know if we ever get here.
+                    throw new InvalidOperationException("Expected a challenge to be present");
+                }
+
+                var state = challenge.Properties;
+
+                if (string.IsNullOrEmpty(state.RedirectUri))
+                {
+                    state.RedirectUri = Request.Uri.ToString();
+                }
+
+                Response.Redirect(Options.CallbackPath.Value + "?return=" + Uri.EscapeDataString(state.RedirectUri));
             }
 
             return Task.FromResult<object>(null);
