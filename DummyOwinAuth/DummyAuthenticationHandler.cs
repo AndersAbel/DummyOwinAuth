@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace DummyOwinAuth
 {
+    // Created by the factory in the DummyAuthenticationMiddleware class.
     class DummyAuthenticationHandler : AuthenticationHandler<DummyAuthenticationOptions>
     {
         protected override Task<AuthenticationTicket> AuthenticateCoreAsync()
@@ -37,6 +38,23 @@ namespace DummyOwinAuth
             }
 
             return Task.FromResult<object>(null);
+        }
+
+        public override async Task<bool> InvokeAsync()
+        {
+            // This is always invoked on each request. For passive middleware, only do anything if this is
+            // for our callback path when the user is redirected back from the authentication provider.
+            if(Options.CallbackPath.HasValue && Options.CallbackPath == Request.Path)
+            {
+                var ticket = await AuthenticateAsync();
+
+                if(ticket != null)
+                {
+                    Response.Redirect(ticket.Properties.RedirectUri);
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
