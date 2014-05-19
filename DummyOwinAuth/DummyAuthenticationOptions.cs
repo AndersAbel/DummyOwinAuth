@@ -10,13 +10,14 @@ namespace DummyOwinAuth
 {
     public class DummyAuthenticationOptions : AuthenticationOptions
     {
-        public DummyAuthenticationOptions(string userName)
+        public DummyAuthenticationOptions(string userName, string userId)
             : base(Constants.DefaultAuthenticationType)
         {
             Caption = Constants.DefaultAuthenticationType;
             CallbackPath = new PathString("/signin-dummy");
             AuthenticationMode = AuthenticationMode.Passive;
             UserName = userName;
+            UserId = userId;
         }
 
         public string Caption
@@ -29,6 +30,10 @@ namespace DummyOwinAuth
 
         public string UserName { get; set; }
 
+        public string UserId { get; set; }
+
         public string SignInAsAuthenticationType { get; set; }
+
+        public ISecureDataFormat<AuthenticationProperties> StateDataFormat { get; set; }
     }
 }

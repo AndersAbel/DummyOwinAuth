@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.DataProtection;
+using Microsoft.Owin.Security.DataHandler;
 
 namespace DummyOwinAuth
 {
@@ -19,6 +21,13 @@ namespace DummyOwinAuth
             if(string.IsNullOrEmpty(Options.SignInAsAuthenticationType))
             {
                 options.SignInAsAuthenticationType = app.GetDefaultSignInAsAuthenticationType();
+            }
+            if(options.StateDataFormat == null)
+            {
+                var dataProtector = app.CreateDataProtector(typeof(DummyAuthenticationMiddleware).FullName,
+                    options.AuthenticationType);
+
+                options.StateDataFormat = new PropertiesDataFormat(dataProtector);
             }
         }
 

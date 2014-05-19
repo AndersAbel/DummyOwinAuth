@@ -17,13 +17,11 @@ namespace DummyOwinAuth
         {
             // ASP.Net Identity requires the NameIdentitifer field to be set or it won't  
             // accept the external login (AuthenticationManagerExtensions.GetExternalLoginInfo)
-            var identity = new ClaimsIdentity(Options.SignInAsAuthenticationType, ClaimTypes.NameIdentifier, ClaimTypes.Role);
-            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, Options.UserName));
+            var identity = new ClaimsIdentity(Options.SignInAsAuthenticationType);
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, Options.UserId, null, Options.AuthenticationType));
+            identity.AddClaim(new Claim(ClaimTypes.Name, Options.UserName));
 
-            var properties = new AuthenticationProperties()
-            {
-                RedirectUri = Request.Query["state"]
-            };
+            var properties = Options.StateDataFormat.Unprotect(Request.Query["state"]);
 
             return Task.FromResult(new AuthenticationTicket(identity, properties));
         }
@@ -46,7 +44,9 @@ namespace DummyOwinAuth
                     state.RedirectUri = Request.Uri.ToString();
                 }
 
-                Response.Redirect(WebUtilities.AddQueryString(Options.CallbackPath.Value, "state", state.RedirectUri));
+                var stateString = Options.StateDataFormat.Protect(state);
+
+                Response.Redirect(WebUtilities.AddQueryString(Options.CallbackPath.Value, "state", stateString));
             }
 
             return Task.FromResult<object>(null);

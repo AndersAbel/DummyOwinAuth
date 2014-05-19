@@ -57,7 +57,7 @@ namespace SampleMvcApp
             //    ClientSecret = ""
             //});
 
-            app.UseDummyAuthentication(new DummyAuthenticationOptions("John Doe"));
+            app.UseDummyAuthentication(new DummyAuthenticationOptions("John Doe", "42"));
         }
     }
 }
