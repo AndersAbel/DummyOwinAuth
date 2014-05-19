@@ -1,8 +1,10 @@
-﻿using Microsoft.Owin.Security;
+﻿using Microsoft.Owin.Infrastructure;
+using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,7 +15,17 @@ namespace DummyOwinAuth
     {
         protected override Task<AuthenticationTicket> AuthenticateCoreAsync()
         {
-            throw new NotImplementedException();
+            // ASP.Net Identity requires the NameIdentitifer field to be set or it won't  
+            // accept the external login (AuthenticationManagerExtensions.GetExternalLoginInfo)
+            var identity = new ClaimsIdentity(Options.SignInAsAuthenticationType, ClaimTypes.NameIdentifier, ClaimTypes.Role);
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, Options.UserName));
+
+            var properties = new AuthenticationProperties()
+            {
+                RedirectUri = Request.Query["state"]
+            };
+
+            return Task.FromResult(new AuthenticationTicket(identity, properties));
         }
 
         protected override Task ApplyResponseChallengeAsync()
@@ -34,7 +46,7 @@ namespace DummyOwinAuth
                     state.RedirectUri = Request.Uri.ToString();
                 }
 
-                Response.Redirect(Options.CallbackPath.Value + "?return=" + Uri.EscapeDataString(state.RedirectUri));
+                Response.Redirect(WebUtilities.AddQueryString(Options.CallbackPath.Value, "state", state.RedirectUri));
             }
 
             return Task.FromResult<object>(null);
@@ -50,6 +62,8 @@ namespace DummyOwinAuth
 
                 if(ticket != null)
                 {
+                    Context.Authentication.SignIn(ticket.Properties, ticket.Identity);
+
                     Response.Redirect(ticket.Properties.RedirectUri);
                     return true;
                 }

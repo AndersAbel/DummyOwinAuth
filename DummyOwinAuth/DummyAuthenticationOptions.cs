@@ -28,5 +28,7 @@ namespace DummyOwinAuth
         public PathString CallbackPath { get; set; }
 
         public string UserName { get; set; }
+
+        public string SignInAsAuthenticationType { get; set; }
     }
 }
