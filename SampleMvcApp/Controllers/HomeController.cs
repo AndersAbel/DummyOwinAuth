@@ -26,5 +26,11 @@ namespace SampleMvcApp.Controllers
 
             return View();
         }
+
+        [Authorize]
+        public ActionResult Secure()
+        {
+            return View();
+        }
     }
 }
