@@ -13,7 +13,7 @@ using Microsoft.Owin.Security.DataHandler;
 namespace DummyOwinAuth
 {
     // One instance is created when the application starts.
-    class DummyAuthenticationMiddleware : AuthenticationMiddleware<DummyAuthenticationOptions>
+    public class DummyAuthenticationMiddleware : AuthenticationMiddleware<DummyAuthenticationOptions>
     {
         public DummyAuthenticationMiddleware(OwinMiddleware next, IAppBuilder app, DummyAuthenticationOptions options)
             : base(next, options)
