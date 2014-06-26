@@ -11,9 +11,7 @@ namespace DummyOwinAuth
     {
         public static IAppBuilder UseDummyAuthentication(this IAppBuilder app, DummyAuthenticationOptions options)
         {
-            app.Use(typeof(DummyAuthenticationMiddleware), app, options);
-            
-            return app;
+            return app.Use(typeof(DummyAuthenticationMiddleware), app, options);
         }
     }
 }

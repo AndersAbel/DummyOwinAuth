@@ -13,17 +13,11 @@ namespace DummyOwinAuth
         public DummyAuthenticationOptions(string userName, string userId)
             : base(Constants.DefaultAuthenticationType)
         {
-            Caption = Constants.DefaultAuthenticationType;
+            Description.Caption = Constants.DefaultAuthenticationType;
             CallbackPath = new PathString("/signin-dummy");
             AuthenticationMode = AuthenticationMode.Passive;
             UserName = userName;
             UserId = userId;
-        }
-
-        public string Caption
-        {
-            get { return Description.Caption; }
-            set { Description.Caption = value; }
         }
 
         public PathString CallbackPath { get; set; }
